@@ -1,0 +1,101 @@
+/*==============================================================*/
+/* Table: CLIENTE                                               */
+/*==============================================================*/
+
+
+insert into CLIENTE values(1,'Pedro','Cedeño','Pedro@gmail.com');
+insert into CLIENTE values(2,'Darwin','Vera','Darwin@gmail.com');
+insert into CLIENTE values(3,'Ana','Perez','Ana@gmail.com');
+insert into CLIENTE values(4,'Mauro','Ponce','Mauro@gmail.com');
+insert into CLIENTE values(5,'Ramiro','Bermudez','Ramiro@gmail.com');
+
+/*==============================================================*/
+/* Table: EMPLEADO                                              */
+/*==============================================================*/
+
+insert into EMPLEADO values(1,1,'Agustin','Moreiara','calle 110 av 120A','1989-01-19','2020-05-15');
+insert into EMPLEADO values(2,2,'Dayan','Anchundia','calle 114 av 26A','1989-01-19','2020-10-17');
+insert into EMPLEADO values(3,3,'Joss','Rojas','calle 110 av 140A','1990-01-19','2020-11-18');
+insert into EMPLEADO values(4,4,'Jorge','Hernan','calle 200 av 220A','1979-01-19','2020-01-17');
+insert into EMPLEADO values(5,5,'Sofia','Perez','calle 130 av 120A','1989-01-19','2020-12-19');
+
+/*==============================================================*/
+/* Table: PROFESIONAL_REGISTRADO                                */
+/*==============================================================*/
+
+insert into PROFESIONAL_REGISTRADO values(1,1,'null',null);
+insert into PROFESIONAL_REGISTRADO values(2,2,null,'SI');
+insert into PROFESIONAL_REGISTRADO values(3,3,'null','null');
+insert into PROFESIONAL_REGISTRADO values(4,4,'null',null);
+insert into PROFESIONAL_REGISTRADO values(5,5,'SI',null);
+
+/*==============================================================*/
+/* Table: TIP_EMPLEADO                                          */
+/*==============================================================*/
+
+insert into TIP_EMPLEADO values(1,1,'Vendedor');
+insert into TIP_EMPLEADO values(2,2,'Profecional');
+insert into TIP_EMPLEADO values(3,3,'Limpieza');
+insert into TIP_EMPLEADO values(4,4,'Vendedor');
+insert into TIP_EMPLEADO values(5,5,'Profecional');
+
+/*==============================================================*/
+/* Table: VELATORIO                                             */
+/*==============================================================*/
+
+insert into VELATORIO values(1,'20x15','Av 116 calle 100','40','14:45:15');
+insert into VELATORIO values(2,'20x15','Av 114 calle 110',60,'15:45:15');
+insert into VELATORIO values(3,'30x15','Av 116 calle 120',70,'16:45:15');
+insert into VELATORIO values(4,'20x14','Av 113 calle 110',65,'17:45:15');
+insert into VELATORIO values(5,'25x15','Av 114 calle 112',75,'18:45:15');
+
+/*==============================================================*/
+/* Table: SERVICIO                                              */
+/*==============================================================*/
+
+insert into SERVICIO values(1,1,'si','si','si','si','si',205.00);
+insert into SERVICIO values(2,2,'si','si',null,null,'si',250.00);
+insert into SERVICIO values(3,3,null,'si','si',null,'si',260.00);
+insert into SERVICIO values(4,4,'si',null,'si','si','si',355.00);
+insert into SERVICIO values(5,5,'si',null,null,'si','si',145.00);
+
+/*==============================================================*/
+/* Table: FALLECIDO                                             */
+/*==============================================================*/
+
+insert into FALLECIDO values(1,1,'Julio','Zambrano','Masculino','12-05-1989','16-10-2021','14:40:15','16:41:15');
+insert into FALLECIDO values(2,2,'Ana','Moreira','Femenino','12-05-1965','18-11-2021','15:30:25','16:15:15');
+insert into FALLECIDO values(3,3,'Sofia','Zamora','Femenino','12-05-1970','16-11-2021','18:40:15','19:50:11');
+insert into FALLECIDO values(4,4,'David','Palma','Masculino','12-05-1960','18-07-2021','15:30:15','16:11:15');
+insert into FALLECIDO values(5,5,'Hector','Cedeño','Masculino','12-05-1987','18-12-2021','19:30:15','21:41:15');
+
+/*==============================================================*/
+/* Table: RESERVA_DETALLE                                       */
+/*==============================================================*/
+
+insert into RESERVA_DETALLE values(1,1,1,1,1);
+insert into RESERVA_DETALLE values(2,2,2,2,2);
+insert into RESERVA_DETALLE values(3,3,4,3,3);
+insert into RESERVA_DETALLE values(4,4,5,4,4);
+insert into RESERVA_DETALLE values(5,5,6,5,5);
+
+/*==============================================================*/
+/* Table: FACTURA                                               */
+/*==============================================================*/
+
+insert into FACTURA values(1,1,'2021-10-15');
+insert into FACTURA values(2,2,'2021-10-15');
+insert into FACTURA values(3,3,'2021-10-15');
+insert into FACTURA values(4,4,'2021-10-15');
+insert into FACTURA values(5,5,'2021-10-15');
+insert into FACTURA values(6,6,'2021-10-15');
+
+/*==============================================================*/
+/* Table: CAUSA_MUERTE                                          */
+/*==============================================================*/
+
+insert into CAUSA_MUERTE values(1,1,'si',null,null,null,null);
+insert into CAUSA_MUERTE values(2,2,null,null,null,null,'si');
+insert into CAUSA_MUERTE values(3,3,null,'si',null,null,null);
+insert into CAUSA_MUERTE values(4,4,null,'si',null,null,null);
+insert into CAUSA_MUERTE values(5,5,null,null,'si',null,null);
