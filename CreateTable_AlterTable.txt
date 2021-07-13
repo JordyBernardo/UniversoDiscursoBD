@@ -1,0 +1,205 @@
+/*==============================================================*/
+/* Table: CLIENTE                                               */
+/*==============================================================*/
+create table CLIENTE (
+   CLI_ID               INT                  not null,
+   CLI_NOMBRE           CHAR(60)             not null,
+   CLI_APELLIDO         CHAR(60)             not null,
+   CLI_CORREO		CHAR(60)             not null,
+   constraint PK_CLIENTE primary key (CLI_ID)
+);
+
+
+
+
+/*==============================================================*/
+/* Table: EMPLEADO                                              */
+/*==============================================================*/
+create table EMPLEADO (
+   EM_ID                INT(6)                  not null,
+   PR_ID                INT                  not null,
+   EM_NOMBRE            CHAR(60)             not null,
+   EM_APELLIDO          CHAR(60)             not null,
+   EM_DIRECCION         CHAR(60)             not null,
+   EM_FNACIMIENTO       DATE                 not null,
+   EM_FINGRESOLABORAL   DATE                 not null,
+   constraint PK_EMPLEADO primary key (EM_ID)
+);
+
+
+
+
+/*==============================================================*/
+/* Table: PROFESIONAL_REGISTRADO                                */
+/*==============================================================*/
+create table PROFESIONAL_REGISTRADO (
+   PR_ID                INT                  not null,
+   EM_ID                INT                  null,
+   PR_EMBALSAMIENTO     CHAR(50)             null,
+   PR_MAQUILLAJE        CHAR(50)             null,
+   constraint PK_PROFESIONAL_REGISTRADO primary key (PR_ID)
+);
+
+
+
+/*==============================================================*/
+/* Table: TIP_EMPLEADO                                          */
+/*==============================================================*/
+create table TIP_EMPLEADO (
+   TIP_ID               INT                  not null,
+   EM_ID                INT(6)               not  null,
+   TIP_DESCRIPCION      CHAR(30)             not null,
+   constraint PK_TIP_EMPLEADO primary key (TIP_ID)
+);
+
+
+
+
+/*==============================================================*/
+/* Table: VELATORIO                                             */
+/*==============================================================*/
+create table VELATORIO (
+   VELATORIO_ID         INT                   not null,
+   VELATORIO_DIMENCIONES CHAR(100)            not null,
+   VELATORIO_DIRECCION  CHAR(100)             not null,
+   VELATORIO_CAPACIDAD_P INT                  not null,
+   VERATORIO_HORARESERVA TIME                 not null,
+   constraint PK_VELATORIO primary key (VELATORIO_ID)
+);
+	
+
+
+
+
+/*==============================================================*/
+/* Table: SERVICIO                                              */
+/*==============================================================*/
+create table SERVICIO (
+   SER_ID               INT                  not null,
+   RD_ID                INT                  null,
+   SER_ACOMPANAMIENTOMUSICAL CHAR(2)         null,
+   SER_COMIDA           CHAR(2)              null,
+   SER_TRANSPORTECEMENTERIO CHAR(2)          null,
+   SER_VENTAATAUD       CHAR(2)              null,
+   SER_MAQUINACAFE      CHAR(2)              null,
+   SER_COSTO            FLOAT                null,
+   constraint PK_SERVICIO primary key (SER_ID)
+);
+
+
+
+
+/*==============================================================*/
+/* Table: FALLECIDO                                             */
+/*==============================================================*/
+create table FALLECIDO (
+   F_ID                 INT                  not null,
+   RD_ID                INT                  not null,
+   F_NOMBRE             CHAR(50)             not null,
+   F_APELLIDO           CHAR(50)             not null,
+   F_GENERO             CHAR(30)             not null,
+   F_FECHANACIMIENTO    DATE                 not null,
+   F_DIFUNCION          DATE          	     not null,
+   F_HORADIFUNCION      TIME                 not null,
+   F_HORAEMBALSAMIENTO  TIME                 not null,
+   constraint PK_FALLESIDO primary key (F_ID)
+);
+
+
+
+/*==============================================================*/
+/* Table: RESERVA_DETALLE                                       */
+/*==============================================================*/
+create table RESERVA_DETALLE (
+   RD_ID                INT(6)               not null,
+   VELATORIO_ID         INT                  not null,
+   EM_ID                INT                  not null,
+   CLI_ID               INT                  not null,
+   F_ID                 INT                  not null,
+   constraint PK_RESERVA_DETALLE primary key (RD_ID)
+);
+
+
+
+/*==============================================================*/
+/* Table: FACTURA                                               */
+/*==============================================================*/
+create table FACTURA (
+   FAC_ID               INT                  not null,
+   RD_ID                INT                  not null,
+   FAC_FECHA            DATE                 null,
+   constraint PK_FACTURA primary key (FAC_ID)
+);
+
+
+
+/*==============================================================*/
+/* Table: CAUSA_MUERTE                                          */
+/*==============================================================*/
+create table CAUSA_MUERTE (
+   CM_ID                INT                  not null,
+   F_ID                 INT                  not null,
+   CM_CANCER            CHAR(10)             null,
+   CM_COVID19          	CHAR(10)             null,
+   CM_NATURAL           CHAR(10)             null,
+   CM_iNTOXICACION      CHAR(10)             null,
+   CM_VIH    		CHAR(10)             null,
+   constraint PK_CAUSA_MUERTE primary key (CM_ID)
+);
+
+
+alter table CAUSA_MUERTE
+   add constraint FK_CAUSA_MU_RELATIONS_FALLECID foreign key (F_ID)
+      references FALLECIDO (F_ID)
+      on delete restrict on update restrict;
+
+alter table EMPLEADO
+   add constraint FK_EMPLEADO_RELATIONS_PROFESIO foreign key (PR_ID)
+      references PROFESIONAL_REGISTRADO (PR_ID)
+      on delete restrict on update restrict;
+
+alter table FACTURA
+   add constraint FK_FACTURA_RELATIONS_RESERVA_ foreign key (RD_ID)
+      references RESERVA_DETALLE (RD_ID)
+      on delete restrict on update restrict;
+
+alter table FALLECIDO
+   add constraint FK_FALLECID_RELATIONS_RESERVA_ foreign key (RD_ID)
+      references RESERVA_DETALLE (RD_ID)
+      on delete restrict on update restrict;
+
+alter table PROFESIONAL_REGISTRADO
+   add constraint FK_PROFESIO_RELATIONS_EMPLEADO foreign key (EM_ID)
+      references EMPLEADO (EM_ID)
+      on delete restrict on update restrict;
+
+alter table RESERVA_DETALLE
+   add constraint FK_RESERVA__RELATIONS_CLIENTE foreign key (CLI_ID)
+      references CLIENTE (CLI_ID)
+      on delete restrict on update restrict;
+
+alter table RESERVA_DETALLE
+   add constraint FK_RESERVA__RELATIONS_FALLECID foreign key (F_ID)
+      references FALLECIDO (F_ID)
+      on delete restrict on update restrict;
+
+alter table RESERVA_DETALLE
+   add constraint FK_RESERVA__RELATIONS_VELATORI foreign key (VELATORIO_ID)
+      references VELATORIO (VELATORIO_ID)
+      on delete restrict on update restrict;
+
+alter table RESERVA_DETALLE
+   add constraint FK_RESERVA__RELATIONS_EMPLEADO foreign key (EM_ID)
+      references EMPLEADO (EM_ID)
+      on delete restrict on update restrict;
+	  
+
+alter table SERVICIO
+   add constraint FK_SERVICIO_RELATIONS_RESERVA_ foreign key (RD_ID)
+      references RESERVA_DETALLE (RD_ID)
+      on delete restrict on update restrict;
+
+alter table TIP_EMPLEADO
+   add constraint FK_TIP_EMPL_RELATIONS_EMPLEADO foreign key (EM_ID)
+      references EMPLEADO (EM_ID)
+      on delete restrict on update restrict;
