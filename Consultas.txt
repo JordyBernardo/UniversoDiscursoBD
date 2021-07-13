@@ -1,0 +1,62 @@
+/*==============================================================*/
+/*==============================================================*/
+
+/*El tiempo promedio transcurrido entre la defunción y el embalsamamiento de difuntos.*/
+/*AVG funcion para sacar promedios*/
+
+
+SELECT 
+  AVG (fallecido.f_horadifuncion) as Hora_Difucion, 
+  AVG (fallecido.f_horaembalsamiento) as Hora_Embalsamiento
+  FROM 
+  public.fallecido;
+
+/*==============================================================*/
+/*==============================================================*/
+/*Cantidad de veces por cada sala de velación en donde se alquile el espacio y no se venda el ataúd.*/
+
+SELECT 
+  reserva_detalle.velatorio_id  as cantidad_arquilada
+  ,count(servicio.ser_ventaataud) as cantidad_de_veces
+FROM 
+  public.reserva_detalle 
+  inner join public.servicio on reserva_detalle.rd_id = servicio.rd_id
+WHERE 
+  servicio.ser_ventaataud is null
+  group by (reserva_detalle.velatorio_id)
+
+/*==============================================================*/
+/*==============================================================*/
+/*Agentes vendedores que hayan logrado alquilar el espacio y vender el ataúd.*/
+
+
+SELECT 
+  tip_empleado.tip_descripcion, 
+  empleado.em_nombre, 
+  empleado.em_apellido, 
+  reserva_detalle.velatorio_id, 
+  servicio.ser_ventaataud
+FROM 
+  public.reserva_detalle
+  inner join public.servicio on reserva_detalle.rd_id = servicio.rd_id
+  inner join public.empleado on empleado.em_id = reserva_detalle.em_id
+  inner join public.tip_empleado on empleado.em_id = tip_empleado.em_id 
+WHERE 
+  tip_empleado.tip_descripcion = 'Vendedor' AND
+  servicio.ser_ventaataud IS NOT NULL;
+  
+/*==============================================================*/
+/*==============================================================*/
+/*Suma total de cada causa de defunción.*/
+
+SELECT 
+  count(causa_muerte.cm_cancer) AS CANCER, 
+  count(causa_muerte.cm_covid19) AS COVID19, 
+  count(causa_muerte.cm_natural) AS NATURAL, 
+  count(causa_muerte.cm_intoxicacion) AS INTOXICACION, 
+  count(causa_muerte.cm_vih) AS VIH
+FROM 
+
+public.fallecido 
+  inner join public.causa_muerte on fallecido.f_id = causa_muerte.f_id
+  
