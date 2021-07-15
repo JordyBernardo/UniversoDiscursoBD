@@ -1,6 +1,3 @@
-/*==============================================================*/
-/*==============================================================*/
-
 /*El tiempo promedio transcurrido entre la defunción y el embalsamamiento de difuntos.*/
 /*AVG funcion para sacar promedios*/
 
@@ -11,52 +8,32 @@ SELECT
   FROM 
   public.fallecido;
 
-/*==============================================================*/
-/*==============================================================*/
+
 /*Cantidad de veces por cada sala de velación en donde se alquile el espacio y no se venda el ataúd.*/
 
 SELECT 
   reserva_detalle.velatorio_id  as cantidad_arquilada
-  ,count(servicio.ser_ventaataud) as cantidad_de_veces
+  ,count(SERVICIO.DESCRIPCION_SERVI='ATAUD') as cantidad_de_veces
 FROM 
   public.reserva_detalle 
-  inner join public.servicio on reserva_detalle.rd_id = servicio.rd_id
+  inner join public.servicio on reserva_detalle.rd_id = servicio.ser_id
 WHERE 
-  servicio.ser_ventaataud is null
+  SERVICIO.DESCRIPCION_SERVI='ATAUD' 
   group by (reserva_detalle.velatorio_id)
-
-/*==============================================================*/
-/*==============================================================*/
+  
 /*Agentes vendedores que hayan logrado alquilar el espacio y vender el ataúd.*/
 
 
-SELECT 
-  tip_empleado.tip_descripcion, 
-  empleado.em_nombre, 
-  empleado.em_apellido, 
-  reserva_detalle.velatorio_id, 
-  servicio.ser_ventaataud
-FROM 
-  public.reserva_detalle
-  inner join public.servicio on reserva_detalle.rd_id = servicio.rd_id
-  inner join public.empleado on empleado.em_id = reserva_detalle.em_id
-  inner join public.tip_empleado on empleado.em_id = tip_empleado.em_id 
-WHERE 
-  tip_empleado.tip_descripcion = 'Vendedor' AND
-  servicio.ser_ventaataud IS NOT NULL;
-  
-/*==============================================================*/
-/*==============================================================*/
+SELECT EMPLEADO.EM_NOMBRE, EMPLEADO.EM_APELLIDO, TIP_EMPLEADO.TIP_DESCRIPCION, SERVICIO.DESCRIPCION_SERVI FROM EMPLEADO
+INNER JOIN TIP_EMPLEADO ON  TIP_EMPLEADO.TIP_ID=EMPLEADO.TIPO_EMPLEADO
+INNER JOIN RESERVA_DETALLE ON RESERVA_DETALLE.RD_ID=EMPLEADO.EM_ID
+INNER JOIN VELATORIO ON VELATORIO.VELATORIO_ID=RESERVA_DETALLE.RD_ID
+INNER JOIN SERVICIO ON SERVICIO.SER_ID=RESERVA_DETALLE.RD_ID 
+WHERE TIP_EMPLEADO.TIP_DESCRIPCION= 'VENDEDOR' AND SERVICIO.DESCRIPCION_SERVI='ATAUD' 
+
 /*Suma total de cada causa de defunción.*/
 
-SELECT 
-  count(causa_muerte.cm_cancer) AS CANCER, 
-  count(causa_muerte.cm_covid19) AS COVID19, 
-  count(causa_muerte.cm_natural) AS NATURAL, 
-  count(causa_muerte.cm_intoxicacion) AS INTOXICACION, 
-  count(causa_muerte.cm_vih) AS VIH
-FROM 
 
-public.fallecido 
-  inner join public.causa_muerte on fallecido.f_id = causa_muerte.f_id
+SELECT DESCRIPCION_DE_MUER, COUNT(DESCRIPCION_DE_MUER) AS TOTAL FROM CAUSA_MUERTE
+GROUP BY DESCRIPCION_DE_MUER
   
