@@ -1,0 +1,20 @@
+CREATE OR REPLACE FUNCTION Tri_embal() RETURNS TRIGGER
+AS 
+$Tri_embal$
+	DECLARE
+		cantidad int;
+		hours int = 48;
+BEGIN
+	select count (*) into cantidad  from FALLECIDO where F_ID = new.F_ID;
+	select CAUSA_MUERTE.F_ID into hours from CAUSA_MUERTE;
+	if (cantidad >= hours) then
+		RAISE EXCEPTION ' No cumple con los requerimientos para el servicio embalsamamiento';
+	END if;
+	RETURN new;
+END;
+$Tri_embal$
+LANGUAGE plpgsql;
+
+create trigger Tri_embal before insert
+on FALLECIDO for EACH ROW
+execute procedure Tri_embal();

@@ -1,0 +1,17 @@
+do $$
+declare 
+	contador int =0;
+	total Record;
+
+	totalservicios Cursor for select * from EMPLEADO,TIP_EMPLEADO,SERVICIO
+	where SERVICIO.SER_ID = SERVICIO.SER_ID and
+	EMPLEADO.TIPO_EMPLEADO = 1;
+begin
+	for total in totalservicios loop
+	contador = contador+count(total.SER_ID);
+	
+Raise Notice 'empleado: %, servicio: %, costo_total: %',
+total.TIP_ID,total.SER_ID, total.SER_COSTO;
+end loop;
+end $$
+Language 'plpgsql';
